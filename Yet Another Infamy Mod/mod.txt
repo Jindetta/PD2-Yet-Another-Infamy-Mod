@@ -1,9 +1,9 @@
 {
     "name" : "Yet Another Infamy Mod (beta)",
-    "description" : "Infamy rank becomes your initial level.",
+    "description" : "Infamy 3.0 ranks become your startup level.",
     "author" : "Jindetta",
     "blt_version" : 2,
-    "version" : 0.9,
+    "version" : 0.95,
     "priority": 0,
     "hooks": [
         {
