@@ -8,8 +8,7 @@ function MenuManager:show_confirm_become_infamous(params)
     else
         local dialog_data = {
             title = managers.localization:text("dialog_become_infamous"),
-            -- text = managers.localization:text(Self.dialog_become_infamous_text),
-            text = "Starting from Infamy 25, your initial level is your Infamy rank. This will reset your weapons/throwable/armor and skill set but you get to keep your unlocks and some of your skill points. As a way to balance this out, you will get 20% level reduction until you pass your initial levels worth in experience points.",
+            text = managers.localization:text("dialog_become_infamous_text", {penalty = self:get_penalty()}),
             focus_button = 2,
             button_list = {
                 {
@@ -47,4 +46,10 @@ function MenuCallbackHandler:_increase_infamous(...)
 
     local points = managers.skilltree:max_points_for_current_level()
     managers.skilltree:_aquire_points(points)
+end
+
+-- Additional functions
+
+function MenuManager:get_penalty()
+    return math.floor(managers.experience:get_penalty() * 100)
 end

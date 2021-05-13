@@ -2,8 +2,7 @@ if not YAIMod then
     local Self = {
         MAX_LEVEL = 100,
         MIN_INFAMY_REQUIREMENT = 25,
-        HOOK_PATH = ModPath .. "hooks/%s.lua",
-        LANG_PATH = ModPath .. "lang/%s.json"
+        HOOK_PATH = ModPath .. "hooks/%s.lua"
     }
 
     function Self.get_xp(level)
@@ -62,6 +61,20 @@ if not YAIMod then
             dofile(Self.HOOK_PATH:format(scripts[hook]))
         end
     end
+
+    Hooks:Add("LocalizationManagerPostInit", "YAIMod_LocalizationManagerPostInit", function(self)
+        self:add_localized_strings({
+            ["dialog_become_infamous_modded"] = [[Starting from Infamy 3.0 ranks (25+) your level no longer starts from 0 after going infamous. Your Infamy rank will be your reputation level instead.
+
+After becoming infamous, your loadout will be reset (skill set #1, primary/secondary weapon, melee, throwable and deployable) but you get to keep your unlocks and skill points up to your initial reputation level.
+
+You cannot level up until you collect the total amount of experience points that your reputation level would normally require. Also, gained XP will be reduced by $penalty% until you level up. Penalty is shown as level reduction.
+
+This is irreversible, and you CAN NOT get back what you sacrifice.
+
+You get to keep all your guns, mods, masks, patterns and materials. The cash in your offshore account will remain. You will gain one rank of Infamy, if you are at infamy rank 100 or below you will also get an Infamy reward.]]
+        })
+    end)
 
     YAIMod = Self
 end
