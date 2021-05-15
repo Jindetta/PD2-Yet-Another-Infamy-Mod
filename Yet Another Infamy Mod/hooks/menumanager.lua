@@ -8,7 +8,7 @@ function MenuManager:show_confirm_become_infamous(params)
     else
         local dialog_data = {
             title = managers.localization:text("dialog_become_infamous"),
-            text = managers.localization:text("dialog_become_infamous_text", {penalty = self:get_penalty()}),
+            text = managers.localization:text("dialog_become_infamous_modded_text", {penalty = self:penalty_string()}),
             focus_button = 2,
             button_list = {
                 {
@@ -50,6 +50,6 @@ end
 
 -- Additional functions
 
-function MenuManager:get_penalty()
+function MenuManager:penalty_string()
     return math.floor(managers.experience:get_penalty() * 100)
 end

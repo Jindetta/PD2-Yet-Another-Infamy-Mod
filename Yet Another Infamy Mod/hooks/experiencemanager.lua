@@ -26,7 +26,7 @@ function ExperienceManager:get_xp_dissected(...)
     local total_xp, data = Self.call("ExperienceManager", "get_xp_dissected", self, ...)
 
     if not self:can_level_up_normally() then
-        local penalty_xp = total_xp * self:get_penalty()
+        local penalty_xp = self:calculate_total_penalty(total_xp)
 
         data.bonus_low_level = math.floor(data.bonus_low_level - penalty_xp)
         total_xp = math.floor(total_xp - penalty_xp)
@@ -64,7 +64,18 @@ function ExperienceManager:get_base_level(start_level)
 end
 
 function ExperienceManager:get_penalty()
-    return math.max(0, self:get_base_level(0) - 50) / 100 + 0.15
+    return math.max(0, self:get_base_level(0) - 50) / 1000 + 0.15
+end
+
+function ExperienceManager:calculate_total_penalty(base_points)
+    local needed_points = self:next_level_data_points() - self:next_level_data_current_points()
+    local total_penalty_points = base_points * self:get_penalty()
+
+    if needed_points < total_penalty_points then
+        return needed_points * self:get_penalty()
+    end
+
+    return total_penalty_points
 end
 
 function ExperienceManager:can_rank_up()
