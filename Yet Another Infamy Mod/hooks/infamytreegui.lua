@@ -19,17 +19,17 @@ end
 
 function InfamyTreeGui:create_experience_error_text(button)
     self.infamous_panel:text({
-		wrap = true,
-		align = "center",
-		x = 40,
-		layer = 3,
-		text = managers.localization:text("error_not_enough_experience", {xp = self:experience_string()}),
-		y = button:bottom(),
-		w = self.infamous_panel:w() - 80,
-		font = tweak_data.menu.pd2_small_font,
-		font_size = tweak_data.menu.pd2_small_font_size,
-		color = Color.red
-	})
+        wrap = true,
+        align = "center",
+        x = 40,
+        layer = 3,
+        text = managers.localization:text("error_not_enough_experience", {xp = self:experience_string()}),
+        y = button:bottom(),
+        w = self.infamous_panel:w() - 80,
+        font = tweak_data.menu.pd2_small_font,
+        font_size = tweak_data.menu.pd2_small_font_size,
+        color = Color.red
+    })
 end
 
 function InfamyTreeGui:experience_string()
