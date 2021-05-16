@@ -75,7 +75,7 @@ function ExperienceManager:calculate_total_penalty(base_points)
     local needed_points = self:next_level_data_points() - self:next_level_data_current_points()
     local total_penalty_points = base_points * self:get_penalty()
 
-    if needed_points < total_penalty_points then
+    if base_points - total_penalty_points > needed_points then
         return needed_points * self:get_penalty()
     end
 

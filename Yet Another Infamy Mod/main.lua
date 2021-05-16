@@ -12,7 +12,7 @@ if not YAIMod then
             total_xp = total_xp + tweak_data:get_value("experience_manager", "levels", i, "points")
         end
 
-        return math.min(23336413, math.floor(total_xp))
+        return math.floor(total_xp)
     end
 
     function Self.clamp_level(level)
