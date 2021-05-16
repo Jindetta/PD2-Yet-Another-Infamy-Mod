@@ -67,16 +67,16 @@ function ExperienceManager:get_base_level(start_level)
     return Self.clamp_level(start_level)
 end
 
-function ExperienceManager:get_penalty()
-    return math.max(0, self:get_base_level(0) - 50) / 1000 + 0.15
+function ExperienceManager:get_penalty(base_offset)
+    return Self.clamp_level(self:get_base_level(0) + base_offset - 50) / 1000 + 0.15
 end
 
 function ExperienceManager:calculate_total_penalty(base_points)
     local needed_points = self:next_level_data_points() - self:next_level_data_current_points()
-    local total_penalty_points = base_points * self:get_penalty()
+    local total_penalty_points = base_points * self:get_penalty(0)
 
     if base_points - total_penalty_points > needed_points then
-        return needed_points * self:get_penalty()
+        return needed_points * self:get_penalty(0)
     end
 
     return total_penalty_points

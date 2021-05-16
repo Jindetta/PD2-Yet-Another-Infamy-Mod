@@ -56,5 +56,5 @@ end
 -- Additional functions
 
 function MenuManager:penalty_string()
-    return math.floor(managers.experience:get_penalty() * 100)
+    return ("%.1f"):format(managers.experience:get_penalty(1) * 100)
 end
