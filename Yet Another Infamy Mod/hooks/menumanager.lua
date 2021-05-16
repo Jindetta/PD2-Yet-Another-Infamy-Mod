@@ -39,13 +39,18 @@ end
 function MenuCallbackHandler:_increase_infamous(...)
     Self.call("MenuCallbackHandler", "_increase_infamous", self, ...)
 
-    for level = 0, managers.experience:current_level() do
-        managers.upgrades:aquire_from_level_tree(level)
-        managers.upgrades:verify_level_tree(level)
-    end
+    if managers.experience:current_rank() > Self.MIN_INFAMY_REQUIREMENT then
+        for level = 0, managers.experience:current_level() do
+            managers.upgrades:aquire_from_level_tree(level)
+            managers.upgrades:verify_level_tree(level)
+        end
 
-    local points = managers.skilltree:max_points_for_current_level()
-    managers.skilltree:_aquire_points(points)
+        local points = managers.skilltree:max_points_for_current_level()
+        managers.skilltree:_aquire_points(points)
+
+        managers.experience:set_initial_level_data()
+        managers.savefile:save_progress()
+    end
 end
 
 -- Additional functions

@@ -16,7 +16,7 @@ if not YAIMod then
     end
 
     function Self.clamp_level(level)
-        return math.max(0, math.min(level, Self.MAX_LEVEL))
+        return math.clamp(level, 0, Self.MAX_LEVEL)
     end
 
     function Self.register(hook_class, ...)

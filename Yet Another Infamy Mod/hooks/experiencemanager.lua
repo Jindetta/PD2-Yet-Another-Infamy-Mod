@@ -5,20 +5,7 @@ function ExperienceManager:_set_next_level_data(level)
     if self:can_level_up_normally() then
         Self.call("ExperienceManager", "_set_next_level_data", self, level)
     else
-        self._global.next_level_data = {}
-        local needed_xp = Self.get_xp(level)
-        local current_xp = self:total()
-
-        self:_set_next_level_data_points(Application:digest_value(needed_xp, true))
-        self:_set_next_level_data_current_points(current_xp)
-
-        if self._experience_progress_data then
-            table.insert(self._experience_progress_data, {
-                level = Self.clamp_level(level),
-                current = current_xp,
-                total = needed_xp
-            })
-        end
+        self:set_initial_level_data()
     end
 end
 
@@ -53,6 +40,23 @@ end
 
 -- Additional functions
 
+function ExperienceManager:set_initial_level_data()
+    local required_level = Self.clamp_level(self:get_base_level(0) + 1)
+    local required_xp, current_xp = Self.get_xp(required_level), self:total()
+
+    self._global.next_level_data = {}
+    self:_set_next_level_data_points(Application:digest_value(required_xp, true))
+    self:_set_next_level_data_current_points(current_xp)
+
+    if self._experience_progress_data then
+        table.insert(self._experience_progress_data, {
+            level = required_level,
+            current = current_xp,
+            total = required_xp
+        })
+    end
+end
+
 function ExperienceManager:get_base_level(start_level)
     local current_rank = self:current_rank()
 
@@ -86,8 +90,8 @@ function ExperienceManager:can_level_up_normally()
     if self:current_rank() > Self.MIN_INFAMY_REQUIREMENT then
         local level = Self.call("ExperienceManager", "current_level", self)
 
-        local required_level = self:get_base_level(0)
-        local required_xp = Self.get_xp(required_level + 1)
+        local required_level = Self.clamp_level(self:get_base_level(0) + 1)
+        local required_xp = Self.get_xp(required_level)
 
         return level >= required_level and self:total() >= required_xp
     end
