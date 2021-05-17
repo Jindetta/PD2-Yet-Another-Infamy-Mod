@@ -4,11 +4,13 @@ Self.register("ExperienceManager", "get_xp_dissected", "current_level")
 function ExperienceManager:get_xp_dissected(...)
     local total_xp, data = Self.call("ExperienceManager", "get_xp_dissected", self, ...)
 
-    if not self:can_level_up_normally() then
-        local penalty_xp = self:calculate_total_penalty(total_xp)
+    if self:current_rank() > Self.MIN_INFAMY_REQUIREMENT then
+        if self:total() < Self.get_xp(self:get_base_level(0)) then
+            local penalty_xp = self:calculate_total_penalty(total_xp)
 
-        data.bonus_low_level = math.floor(data.bonus_low_level - penalty_xp)
-        total_xp = math.floor(total_xp - penalty_xp)
+            data.bonus_low_level = math.floor(data.bonus_low_level - penalty_xp)
+            total_xp = math.floor(total_xp - penalty_xp)
+        end
     end
 
     return total_xp, data
@@ -76,8 +78,4 @@ end
 
 function ExperienceManager:can_rank_up()
     return self:current_rank() <= Self.MIN_INFAMY_REQUIREMENT or self:total() >= Self.get_xp(Self.MAX_LEVEL)
-end
-
-function ExperienceManager:can_level_up_normally()
-    return self:current_rank() <= Self.MIN_INFAMY_REQUIREMENT or self:total() >= Self.get_xp(self:get_base_level(0))
 end
