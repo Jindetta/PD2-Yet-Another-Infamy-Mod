@@ -1,13 +1,5 @@
 local Self = YAIMod
-Self.register("ExperienceManager", "_set_next_level_data", "get_xp_dissected", "current_level")
-
-function ExperienceManager:_set_next_level_data(level)
-    if self:can_level_up_normally() then
-        Self.call("ExperienceManager", "_set_next_level_data", self, level)
-    else
-        self:set_initial_level_data()
-    end
-end
+Self.register("ExperienceManager", "get_xp_dissected", "current_level")
 
 function ExperienceManager:get_xp_dissected(...)
     local total_xp, data = Self.call("ExperienceManager", "get_xp_dissected", self, ...)
@@ -87,14 +79,5 @@ function ExperienceManager:can_rank_up()
 end
 
 function ExperienceManager:can_level_up_normally()
-    if self:current_rank() > Self.MIN_INFAMY_REQUIREMENT then
-        local level = Self.call("ExperienceManager", "current_level", self)
-
-        local required_level = Self.clamp_level(self:get_base_level(0) + 1)
-        local required_xp = Self.get_xp(required_level)
-
-        return level >= required_level and self:total() >= required_xp
-    end
-
-    return true
+    return self:current_rank() <= Self.MIN_INFAMY_REQUIREMENT or self:total() >= Self.get_xp(self:get_base_level(0))
 end
