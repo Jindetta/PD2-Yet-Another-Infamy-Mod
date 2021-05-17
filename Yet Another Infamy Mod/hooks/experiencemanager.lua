@@ -68,7 +68,7 @@ function ExperienceManager:get_base_level(start_level)
 end
 
 function ExperienceManager:get_penalty(base_offset)
-    return Self.clamp_level(self:get_base_level(0) + base_offset - 50) / 1000 + 0.15
+    return 0.1 - Self.clamp_level(self:get_base_level(0) + base_offset - 50) / 1000
 end
 
 function ExperienceManager:calculate_total_penalty(base_points)
