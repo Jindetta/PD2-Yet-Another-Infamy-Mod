@@ -5,7 +5,7 @@ function ExperienceManager:get_xp_dissected(...)
     local total_xp, data = Self.call("ExperienceManager", "get_xp_dissected", self, ...)
 
     if self:current_rank() > Self.MIN_INFAMY_REQUIREMENT then
-        if self:total() < Self.get_xp(self:get_base_level(0)) then
+        if self:total() < Self.get_xp(self:get_base_level(0) + 1) then
             local penalty_xp = self:calculate_total_penalty(total_xp)
 
             data.bonus_low_level = math.floor(data.bonus_low_level - penalty_xp)
