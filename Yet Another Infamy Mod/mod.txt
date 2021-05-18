@@ -3,7 +3,7 @@
     "description" : "Infamy 3.0 ranks become your initial reputation level after going infamous.",
     "author" : "Jindetta",
     "blt_version" : 2,
-    "version" : 1.1,
+    "version" : 1.2,
     "priority": 0,
     "hooks": [
         {
