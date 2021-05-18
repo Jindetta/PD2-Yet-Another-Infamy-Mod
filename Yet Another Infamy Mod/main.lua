@@ -67,7 +67,7 @@ if not YAIMod then
             ["error_not_enough_experience"] = "You need to get $xp points or more",
             ["dialog_become_infamous_modded_text"] = [[Starting from Infamy 3.0 ranks (25+) your reputation level no longer starts from 0 after going infamous. Your new Infamy rank will become your reputation level instead. Infamy ranks above 100 remain at reputation level 100.
 
-Your current loadout will be reset including first skill set, primary/secondary weapon, melee, throwable and deployable but you get to keep your unlocks and skill points up to your initial reputation level.
+Your current loadout will be reset partially. Your first skill set will be reset along with any item requiring reputation level beyond your initial level. You get to keep your unlocks and skill points up to your initial reputation level.
 
 You cannot level up until you gain the total amount of experience points that your reputation level would normally require. Also, gained XP will be reduced by $penalty% until you level up. Penalty is shown as level reduction during end screen.
 

@@ -37,6 +37,8 @@ function MenuCallbackHandler:is_level_100()
 end
 
 function MenuCallbackHandler:_increase_infamous(...)
+    self:store_active_loadout()
+
     Self.call("MenuCallbackHandler", "_increase_infamous", self, ...)
 
     if managers.experience:current_rank() > Self.MIN_INFAMY_REQUIREMENT then
@@ -48,13 +50,71 @@ function MenuCallbackHandler:_increase_infamous(...)
         local points = managers.skilltree:max_points_for_current_level()
         managers.skilltree:_aquire_points(points)
 
+        self:restore_active_loadout()
+
         managers.experience:set_initial_level_data()
         managers.savefile:save_progress()
     end
+
+    Global.active_loadout = nil
 end
 
 -- Additional functions
 
 function MenuManager:penalty_string()
-    return ("%.1f"):format(managers.experience:get_penalty(1) * 100)
+    return ("%.1f"):format(managers.experience:get_penalty_value(1) * 100)
+end
+
+function MenuCallbackHandler:store_active_loadout()
+    Global.active_loadout = {
+        deployable = managers.blackmarket:equipped_deployable(1),
+        secondary_deployable = managers.blackmarket:equipped_deployable(2),
+        primary = managers.blackmarket:equipped_weapon_slot("primaries"),
+        secondary = managers.blackmarket:equipped_weapon_slot("secondaries"),
+        melee = managers.blackmarket:equipped_melee_weapon(),
+        grenade = managers.blackmarket:equipped_grenade(),
+        armor = managers.blackmarket:equipped_armor()
+    }
+end
+
+function MenuCallbackHandler:restore_active_loadout()
+    local data = Global.active_loadout
+
+    if type(data) == "table" then
+        if data.primary then
+            managers.blackmarket:equip_weapon("primaries", data.primary)
+        end
+
+        if data.secondary then
+            managers.blackmarket:equip_weapon("secondaries", data.secondary)
+        end
+
+        if data.melee then
+            managers.blackmarket:equip_melee_weapon(data.melee)
+        end
+
+        if data.grenade then
+            managers.blackmarket:equip_grenade(data.grenade)
+        end
+
+        if data.armor then
+            managers.blackmarket:equip_armor(data.armor)
+        end
+
+        if data.deployable then
+            managers.blackmarket:equip_deployable({
+                name = data.deployable,
+                target_slot = 1
+            })
+        end
+
+        if data.secondary_deployable then
+            managers.blackmarket:equip_deployable({
+                name = data.secondary_deployable,
+                target_slot = 2
+            })
+        end
+
+        managers.blackmarket:_verfify_equipped()
+    end
 end
