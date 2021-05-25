@@ -7,11 +7,23 @@
     "priority": 0,
     "hooks": [
         {
+            "hook_id": "lib/managers/hud/hudstageendscreen",
+            "script_path": "main.lua"
+        },
+        {
             "hook_id": "lib/managers/menu/infamytreeguinew",
             "script_path": "main.lua"
         },
         {
+            "hook_id": "lib/managers/multiprofilemanager",
+            "script_path": "main.lua"
+        },
+        {
             "hook_id": "lib/managers/experiencemanager",
+            "script_path": "main.lua"
+        },
+        {
+            "hook_id": "lib/managers/skilltreemanager",
             "script_path": "main.lua"
         },
         {

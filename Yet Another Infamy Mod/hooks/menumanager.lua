@@ -47,8 +47,10 @@ function MenuCallbackHandler:_increase_infamous(...)
             managers.upgrades:verify_level_tree(level)
         end
 
-        local points = managers.skilltree:max_points_for_current_level()
-        managers.skilltree:_aquire_points(points)
+        if managers.experience:current_rank() < Self.MAX_LEVEL then
+            local points = managers.skilltree:max_points_for_current_level()
+            managers.skilltree:_aquire_points(points)
+        end
 
         self:restore_active_loadout()
 

@@ -52,6 +52,9 @@ if not YAIMod then
 
     function Self.setup(hook)
         local scripts = {
+            ["lib/managers/skilltreemanager"] = "skilltreemanager",
+            ["lib/managers/multiprofilemanager"] = "multiprofilemanager",
+            ["lib/managers/hud/hudstageendscreen"] = "stageendscreen",
             ["lib/managers/menu/infamytreeguinew"] = "infamytreegui",
             ["lib/managers/experiencemanager"] = "experiencemanager",
             ["lib/managers/menumanager"] = "menumanager"
@@ -65,9 +68,9 @@ if not YAIMod then
     Hooks:Add("LocalizationManagerPostInit", "YAIMod_LocalizationManagerPostInit", function(self)
         self:add_localized_strings({
             ["error_not_enough_experience"] = "You need to get $xp points or more",
-            ["dialog_become_infamous_modded_text"] = [[Starting from Infamy 3.0 ranks (25+) your reputation level no longer starts from 0 after going infamous. Your new Infamy rank will become your reputation level instead. Infamy ranks above 100 remain at reputation level 100.
+            ["dialog_become_infamous_modded_text"] = [[Starting from Infamy 3.0 ranks (25+) your reputation level no longer starts from 0 after going infamous. Your new infamy rank will become your reputation level instead. Infamy ranks above 100 remain at reputation level 100.
 
-Your current loadout will be reset partially. Your first skill set will be reset along with any item requiring reputation level beyond your initial level. You get to keep your unlocks and skill points up to your initial reputation level.
+Your current loadout will be reset partially. Your first skill set will be reset along with any item requiring reputation level beyond your initial level. You get to keep your unlocks and skill points up to your initial reputation level. Reset does not apply if your infamy rank is 100 or above.
 
 You cannot level up until you gain the total amount of experience points that your reputation level would normally require. Also, gained XP will be reduced by $penalty% until you level up. Penalty is shown as level reduction during end screen.
 
