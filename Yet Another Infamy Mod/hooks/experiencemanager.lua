@@ -58,7 +58,15 @@ function ExperienceManager:set_initial_level_data()
 end
 
 function ExperienceManager:get_penalty_value(base_offset)
-    return 0.1 - Self.clamp_level(self:current_rank() + base_offset - 50) / 1000
+    local penalty_multiplier = 0.1 - (Self.clamp_level(self:current_rank() - 50) + base_offset) / 1000
+
+    for rank, multiplier in pairs({250 = 0, 100 = 0.01, 75 = 0.05, 50 = 0.075}) do
+        if rank <= self:current_rank() + base_offset then
+            penalty_multiplier = multiplier
+        end
+    end
+
+    return penalty_multiplier
 end
 
 function ExperienceManager:calculate_total_penalty(base_points)
